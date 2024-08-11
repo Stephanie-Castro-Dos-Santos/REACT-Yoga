@@ -1,11 +1,9 @@
 import React, { useRef, useState } from "react";
 
-const ContactComponent = () => {
+export const ContactScreen = () => {
   return (
     <div>
       <h1>Contacta</h1>
     </div>
   );
 };
-
-export default ContactComponent;

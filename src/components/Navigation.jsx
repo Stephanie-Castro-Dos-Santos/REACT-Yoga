@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
-const NavigationComponent = () => {
+const Navigation = () => {
   const location = useLocation();
   const isAuthRoute = location.pathname === "/";
 
@@ -24,4 +24,4 @@ const NavigationComponent = () => {
   );
 };
 
-export default NavigationComponent;
+export default Navigation;

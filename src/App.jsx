@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-//import "./App.css";
+import "./App.css";
 import UsersList from "./services/api";
-import { HomeScreen, AuthScreen, ContactScreen } from "./screens";
+import { HomeScreen, AuthScreen, ContactScreen, EventScreen } from "./screens";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components";
 
@@ -12,9 +12,10 @@ function App() {
         <Navigation />
 
         <Routes>
-          <Route path="/" element={<AuthScreen />} />
-          <Route path="/home" element={<HomeScreen />} />
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/auth" element={<AuthScreen />} />
           <Route path="/contact" element={<ContactScreen />} />
+          <Route path="/events" element={<EventScreen />} />
         </Routes>
       </Router>
     </div>

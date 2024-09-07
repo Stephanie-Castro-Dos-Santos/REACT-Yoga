@@ -59,10 +59,10 @@ const Map = () => {
       <div
         ref={mapContainerRef}
         style={{
-          height: "100vh",
+          height: "25vh",
           left: 0,
           top: 0,
-          width: "100vw",
+          width: "25vw",
         }}
       ></div>
     </div>

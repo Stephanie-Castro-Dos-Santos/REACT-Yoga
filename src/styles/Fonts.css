@@ -1,0 +1,21 @@
+/* Katibeh Font */
+@font-face {
+  font-family: "Katibeh";
+  src: url("./assets/fonts/Katibeh-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Katibeh-Regular.woff") format("woff"),
+    url("./assets/fonts/Katibeh-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font is loading */
+}
+
+/* Kotta One Font */
+@font-face {
+  font-family: "Kotta One";
+  src: url("./assets/fonts/KottaOne-Regular.woff2") format("woff2"),
+    url("./assets/fonts/KottaOne-Regular.woff") format("woff"),
+    url("./assets/fonts/KottaOne-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

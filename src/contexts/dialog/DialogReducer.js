@@ -7,6 +7,8 @@ export const DialogReducer = (state, action) => {
         isDialogOpen: true,
         selectedStartDate: action.payload.startDate,
         selectedEndDate: action.payload.endDate || null,
+        selectedStartTime: action.payload.startTime,
+        selectedEndTime: action.payload.endTime || null,
       };
     case "CLOSE_DIALOG":
       return {
@@ -14,6 +16,8 @@ export const DialogReducer = (state, action) => {
         isDialogOpen: false,
         selectedStartDate: null,
         selectedEndDate: null,
+        selectedStartTime: null,
+        selectedEndTime: null,
       };
     default:
       return state;

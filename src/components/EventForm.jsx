@@ -7,12 +7,17 @@ const EventForm = ({ onSubmit }) => {
     title: "",
     startDate: "",
     endDate: "",
-    allDay: false,
+    startTime: "",
+    endTime: "",
+    teacher: "",
+    center: "",
+    typeYoga: "",
+    modality: "",
     description: "",
+    allDay: false,
     resource: {
       userId: "",
       username: "",
-      location: "",
     },
   });
 
@@ -47,7 +52,6 @@ const EventForm = ({ onSubmit }) => {
           name="startDate"
           value={formState.startDate}
           onChange={handleChange}
-          defaultValue={}
           required
         />
       </div>

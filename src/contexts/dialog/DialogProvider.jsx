@@ -7,13 +7,18 @@ const INITIAL_STATE = {
   isDialogOpen: false,
   selectedStartDate: null,
   selectedEndDate: null,
+  selectedStartTime: null,
+  selectedEndTime: null,
 };
 
 export const DialogProvider = ({ children }) => {
   const [state, dispatch] = useReducer(DialogReducer, INITIAL_STATE);
 
-  const openDialog = (startDate, endDate) => {
-    dispatch({ type: "OPEN_DIALOG", payload: { startDate, endDate } });
+  const openDialog = (startDate, endDate, startTime, endTime) => {
+    dispatch({
+      type: "OPEN_DIALOG",
+      payload: { startDate, endDate, startTime, endTime },
+    });
   };
 
   const closeDialog = () => {

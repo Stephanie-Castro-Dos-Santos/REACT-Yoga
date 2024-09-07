@@ -10,13 +10,29 @@ const localizer = dayjsLocalizer(dayjs);
 
 const Calendar = () => {
   const { handleSelectSlot } = useCalendar();
+  const events = [
+    {
+      id: 0,
+      title: "All Day Event very long title",
+      allDay: true,
+      start: new Date(),
+      end: new Date(),
+    },
+    {
+      id: 1,
+      title: "Long Event",
+      start: new Date(2024, 8, 11),
+      end: new Date(2024, 8, 13),
+    },
+  ];
 
   return (
-    <div style={{ height: "95vh", width: "95vw" }}>
+    <div style={{ height: "95vh", width: "70vw" }}>
       <Dialog />
       <BigCalendar
         defaultDate={new Date()}
         localizer={localizer}
+        events={events}
         selectable
         onSelectSlot={handleSelectSlot} // Attach the handler
       />

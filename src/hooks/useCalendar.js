@@ -21,6 +21,19 @@ export const useCalendar = () => {
 
         // Pasar las fechas y horas a openDialog
         openDialog(startDate, endDate, startTime, endTime);
+      }, 200);
+    },
+    [openDialog]
+  );
+
+  // Maneja el clic en un evento existente
+  const handleSelectEvent = useCallback(
+    (event) => {
+      // Debounce la acción de clic en el evento
+      window.clearTimeout(clickRef.current);
+      clickRef.current = window.setTimeout(() => {
+        // Llamar a openDialogForEditing con los detalles del evento seleccionado
+        openDialog(event);
       }, 250);
     },
     [openDialog]
@@ -28,5 +41,6 @@ export const useCalendar = () => {
 
   return {
     handleSelectSlot,
+    handleSelectEvent,
   };
 };

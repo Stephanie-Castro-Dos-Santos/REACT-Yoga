@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useAuth, useFormState } from "../hooks";
+import { AuthContext } from "../contexts/index";
 
 export const AuthScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [{ email, password, name }, handleChange] = useFormState({
+  const [{ email, password, name, role }, handleChange] = useFormState({
     email: "",
     password: "",
     name: "",
+    role: "",
   });
   const { error, success, handleAuth } = useAuth();
+  const { userId, role: userRole, isAuthenticated } = useContext(AuthContext); // Acceder al contexto usando useContext
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAuth(isLogin, { email, password, ...(isLogin ? {} : { name }) });
+    handleAuth(isLogin, {
+      email,
+      password,
+      ...(isLogin ? {} : { name, role }),
+    });
   };
 
   return (
@@ -30,6 +37,20 @@ export const AuthScreen = () => {
               onChange={handleChange}
               required
             />
+            <br />
+            <label htmlFor="role">Rol: </label>
+            <select
+              id="role"
+              name="role"
+              value={role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Seleccione un rol</option>
+              <option value="student">Alumno</option>
+              <option value="teacher">Profesor</option>
+              <option value="center">Centro</option>
+            </select>
           </div>
         )}
         <div>
@@ -61,6 +82,12 @@ export const AuthScreen = () => {
       </button>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
+
+      {isAuthenticated && (
+        <p>
+          Bienvenido, tu ID es {userId} y tu rol es {userRole}.
+        </p>
+      )}
     </div>
   );
 };

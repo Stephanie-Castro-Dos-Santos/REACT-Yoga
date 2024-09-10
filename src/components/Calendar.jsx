@@ -9,7 +9,7 @@ import { useCalendar } from "../hooks/useCalendar"; // Use the custom hook
 const localizer = dayjsLocalizer(dayjs);
 
 const Calendar = () => {
-  const { handleSelectSlot } = useCalendar();
+  const { handleSelectSlot, handleSelectEvent } = useCalendar();
   const events = [
     {
       id: 0,
@@ -35,6 +35,7 @@ const Calendar = () => {
         events={events}
         selectable
         onSelectSlot={handleSelectSlot} // Attach the handler
+        onSelectEvent={handleSelectEvent}
       />
     </div>
   );

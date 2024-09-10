@@ -1,10 +1,18 @@
 // components/Dialog.js
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDialog } from "../hooks/useDialog"; // Asegúrate de que esta ruta sea correcta
-import { DialogContext } from "../contexts/dialog/DialogContext";
+import { DialogContext, AuthContext } from "../contexts/index";
 import dayjs from "dayjs";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export const Dialog = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+  if (!isAuthenticated) {
+    navigate("/auth");
+  }
   const { dialogRef, toggleDialog, closeOutside } = useDialog();
   const {
     isDialogOpen,
@@ -21,6 +29,42 @@ export const Dialog = () => {
   const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [participants, setParticipants] = useState(1);
+  const [teachers, setTeachers] = useState([]);
+  const [centers, setCenters] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  // Usar useEffect para hacer la solicitud al backend al cargar el componente
+  useEffect(() => {
+    const fetchTeachersAndCenters = async () => {
+      try {
+        const [teachersResponse, centersResponse] = await Promise.all([
+          axios.get("http://localhost:3000/api/teachers"),
+          axios.get("http://localhost:3000/api/centers"),
+        ]);
+
+        console.log(teachersResponse);
+        console.log(centersResponse);
+
+        setTeachers(
+          Array.isArray(teachersResponse.data) ? teachersResponse.data : []
+        );
+        setCenters(
+          Array.isArray(centersResponse.data) ? centersResponse.data : []
+        );
+      } catch (error) {
+        console.error("Error al cargar profesores o centros:", error);
+      }
+    };
+
+    fetchTeachersAndCenters();
+  }, []);
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -118,18 +162,22 @@ export const Dialog = () => {
           {/* Teacher */}
           <label htmlFor="POST-profesor">Profesor:</label>
           <select id="POST-profesor" name="POST-profesor">
-            <option value="profesor1">Profesor 1</option>
-            <option value="profesor2">Profesor 2</option>
-            <option value="profesor3">Profesor 3</option>
+            {teachers.map((teacher) => (
+              <option key={teacher._id} value={teacher._id}>
+                {teacher.user.name}
+              </option>
+            ))}
           </select>
           <br />
           <br />
           {/* Center */}
           <label htmlFor="POST-centro">Centro:</label>
           <select id="POST-centro" name="POST-centro">
-            <option value="centro1">Centro 1</option>
-            <option value="centro2">Centro 2</option>
-            <option value="centro3">Centro 3</option>
+            {centers.map((center) => (
+              <option key={center._id} value={center._id}>
+                {center.user.name}
+              </option>
+            ))}
           </select>
           <br />
           <br />
@@ -157,6 +205,20 @@ export const Dialog = () => {
             <option value="dharma">Dharma</option>
             <option value="sivananda">Sivananda</option>
           </select>
+          <br />
+          <br />
+          {/* Nº Participants */}
+          <label htmlFor="POST-participants">Nº de participantes</label>
+          <input
+            type="number"
+            id="POST-participants"
+            name="POST-participants"
+            min="1"
+            max="10"
+            value={participants}
+            onChange={(e) => setParticipants(e.target.value)}
+            required
+          />
           <br />
           <br />
           {/* Modality */}

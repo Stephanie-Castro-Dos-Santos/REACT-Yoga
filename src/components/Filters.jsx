@@ -6,11 +6,11 @@ export const Filters = () => {
       <BtnLocation />
       <Map />
       {/* Title */}
-      <label htmlFor="POST-startDate">Título:</label>
+      <label htmlFor="GET-startDate">Título:</label>
       <input
         type="text"
-        id="POST-titleEvent"
-        name="POST-titleEvent"
+        id="GET-titleEvent"
+        name="GET-titleEvent"
         //onChange={(e) => setStartDate(e.target.value)}
         placeholder="Título"
         required
@@ -18,18 +18,18 @@ export const Filters = () => {
       <br />
       <br />
       {/* Start Date */}
-      <label htmlFor="POST-startDate">Fecha de Inicio:</label>
-      <input type="date" id="POST-startDate" name="POST-startDate" required />
+      <label htmlFor="GET-startDate">Fecha de Inicio:</label>
+      <input type="date" id="GET-startDate" name="GET-startDate" required />
       <br />
       <br />
       {/* End Date */}
-      <label htmlFor="POST-endDate">Fecha de Fin:</label>
-      <input type="date" id="POST-endDate" name="POST-endDate" required />
+      <label htmlFor="GET-endDate">Fecha de Fin:</label>
+      <input type="date" id="GET-endDate" name="GET-endDate" required />
       <br />
       <br />
       {/* Teacher */}
-      <label htmlFor="POST-profesor">Profesor:</label>
-      <select id="POST-profesor" name="POST-profesor">
+      <label htmlFor="GET-profesor">Profesor:</label>
+      <select id="GET-profesor" name="GET-profesor">
         <option value="profesor1">Profesor 1</option>
         <option value="profesor2">Profesor 2</option>
         <option value="profesor3">Profesor 3</option>
@@ -37,8 +37,8 @@ export const Filters = () => {
       <br />
       <br />
       {/* Center */}
-      <label htmlFor="POST-centro">Centro:</label>
-      <select id="POST-centro" name="POST-centro">
+      <label htmlFor="GET-centro">Centro:</label>
+      <select id="GET-centro" name="GET-centro">
         <option value="centro1">Centro 1</option>
         <option value="centro2">Centro 2</option>
         <option value="centro3">Centro 3</option>
@@ -46,12 +46,12 @@ export const Filters = () => {
       <br />
       <br />
       {/* Duration */}
-      <label htmlFor="POST-duracion">Duración de la clase (minutos):</label>
+      <label htmlFor="GET-duracion">Duración de la clase (minutos):</label>
       <br />
       <input
         type="range"
-        id="POST-duracion"
-        name="POST-duracion"
+        id="GET-duracion"
+        name="GET-duracion"
         min="30"
         max="120"
         step="5"
@@ -61,8 +61,8 @@ export const Filters = () => {
       <br />
       <br />
       {/* Type */}
-      <label htmlFor="POST-tipo">Tipo de Yoga:</label>
-      <select id="POST-tipo" name="POST-tipo">
+      <label htmlFor="GET-tipo">Tipo de Yoga:</label>
+      <select id="GET-tipo" name="GET-tipo">
         <option value="hatha">Hatha</option>
         <option value="vinyasa">Vinyasa</option>
         <option value="dharma">Dharma</option>
@@ -73,16 +73,16 @@ export const Filters = () => {
       {/* Modality */}
       <label>Modalidad:</label>
       <br />
-      <input type="radio" id="POST-online" name="modalidad" value="online" />
-      <label htmlFor="POST-online">Online</label>
+      <input type="radio" id="GET-online" name="modalidad" value="online" />
+      <label htmlFor="GET-online">Online</label>
       <br />
       <input
         type="radio"
-        id="POST-presencial"
+        id="GET-presencial"
         name="modalidad"
         value="presencial"
       />
-      <label htmlFor="POST-presencial">Presencial</label>
+      <label htmlFor="GET-presencial">Presencial</label>
       <br />
       <br />
       {/* Submit button */}

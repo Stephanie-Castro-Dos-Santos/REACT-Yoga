@@ -1,30 +1,30 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "./useSession";
+import axios from "axios";
 
 export const useAuth = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  useSession();
+
   const handleAuth = async (isLogin, data) => {
     const url = `http://localhost:3000/api/${isLogin ? "login" : "register"}`;
     try {
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axios.post(url, data, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        withCredentials: true, // Enviar cookies con la solicitud
       });
 
-      if (!response.ok)
-        throw new Error(
-          (await response.json()).message || "Error en la solicitud"
-        );
+      const responseData = response.data;
+      setSuccess(responseData.message || "Operación exitosa");
 
-      setSuccess((await response.json()).message || "Operación exitosa");
-      setError("");
-      navigate("/home");
+      // Redirigir al inicio después de la autenticación
+      navigate("/");
     } catch (err) {
-      setError(err.message || "Ocurrió un error");
+      setError(err.response?.data?.message || "Ocurrió un error");
       setSuccess("");
     }
   };

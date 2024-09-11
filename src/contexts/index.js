@@ -6,3 +6,5 @@ export { DialogContext } from "./dialog/DialogContext";
 export { DialogProvider } from "./dialog/DialogProvider";
 export { AuthContext } from "./auth/AuthContext";
 export { AuthProvider } from "./auth/AuthProvider";
+export { CalendarContext } from "./calendar/CalendarContext";
+export { CalendarProvider } from "./calendar/CalendarProvider";

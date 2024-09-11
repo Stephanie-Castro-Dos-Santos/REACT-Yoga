@@ -1,14 +1,20 @@
 // hooks/useCalendar.js
 import { useCallback, useContext, useRef } from "react";
-import { DialogContext } from "../contexts/dialog/DialogContext";
+import { useNavigate } from "react-router-dom";
+import { DialogContext, AuthContext } from "../contexts/index";
 import dayjs from "dayjs";
 
 export const useCalendar = () => {
   const { openDialog } = useContext(DialogContext);
+  const { isAuthenticated } = useContext(AuthContext); // Mueve useContext aquí
+  const navigate = useNavigate(); // Mueve useNavigate aquí
   const clickRef = useRef(null);
 
   const handleSelectSlot = useCallback(
     (slotInfo) => {
+      if (!isAuthenticated) {
+        navigate("/auth");
+      }
       // Debounce the click action
       window.clearTimeout(clickRef.current);
       clickRef.current = window.setTimeout(() => {

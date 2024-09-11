@@ -6,6 +6,7 @@ import {
   MapProvider,
   AuthProvider,
   CalendarProvider,
+  FilterProvider,
 } from "./contexts/index.js";
 //import './index.css'
 
@@ -18,13 +19,15 @@ if (!navigator.geolocation) {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <CalendarProvider>
-        <PlacesProvider>
-          <MapProvider>
-            <App />
-          </MapProvider>
-        </PlacesProvider>
-      </CalendarProvider>
+      <FilterProvider>
+        <CalendarProvider>
+          <PlacesProvider>
+            <MapProvider>
+              <App />
+            </MapProvider>
+          </PlacesProvider>
+        </CalendarProvider>
+      </FilterProvider>
     </AuthProvider>
   </React.StrictMode>
 );

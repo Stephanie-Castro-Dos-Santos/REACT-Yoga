@@ -5,7 +5,6 @@ import { CalendarReducer } from "./CalendarReducer";
 
 const initialState = {
   calendarId: null,
-  eventsId: [],
   events: [],
 };
 
@@ -20,10 +19,6 @@ export const CalendarProvider = ({ children }) => {
     dispatch({ type: "SET_EVENTS", payload: events });
   };
 
-  const setEventsId = (eventsId) => {
-    dispatch({ type: "SET_EVENTS_ID", payload: eventsId });
-  };
-
   return (
     <CalendarContext.Provider
       value={{
@@ -32,7 +27,6 @@ export const CalendarProvider = ({ children }) => {
         events: state.events,
         setCalendarId,
         setEvents,
-        setEventsId,
       }}
     >
       {children}

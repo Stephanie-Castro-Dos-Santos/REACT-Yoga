@@ -1,94 +1,72 @@
-import { BtnLocation, Map } from "../components";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { FilterContext } from "../contexts/index";
 
 export const Filters = () => {
+  const { setFilters, resetFilters } = useContext(FilterContext); // Obtener funciones del contexto
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      title: "",
+      startDate: "",
+      endDate: "",
+      teacher: "",
+      center: "",
+      type: "",
+      modality: "",
+    },
+  });
+
+  // Función que se ejecuta al enviar el formulario
+  const onSubmit = (data) => {
+    setFilters(data); // Actualizar los filtros en el contexto
+  };
+
+  // Función para resetear los filtros
+  const handleReset = () => {
+    reset(); // Resetear los valores del formulario
+    resetFilters(); // Limpiar los filtros en el contexto
+  };
+
   return (
-    <form action="" method="post" className=".filters-container ">
-      <BtnLocation />
-      <Map />
-      {/* Title */}
-      <label htmlFor="GET-startDate">Título:</label>
-      <input
-        type="text"
-        id="GET-titleEvent"
-        name="GET-titleEvent"
-        //onChange={(e) => setStartDate(e.target.value)}
-        placeholder="Título"
-        required
-      />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Título */}
+      <label htmlFor="title">Título:</label>
+      <input type="text" {...register("title")} placeholder="Título" />
       <br />
+      {/* Fecha de inicio */}
+      <label htmlFor="startDate">Fecha de Inicio:</label>
+      <input type="date" {...register("startDate")} />
       <br />
-      {/* Start Date */}
-      <label htmlFor="GET-startDate">Fecha de Inicio:</label>
-      <input type="date" id="GET-startDate" name="GET-startDate" required />
+      {/* Fecha de fin */}
+      <label htmlFor="endDate">Fecha de Fin:</label>
+      <input type="date" {...register("endDate")} />
       <br />
-      <br />
-      {/* End Date */}
-      <label htmlFor="GET-endDate">Fecha de Fin:</label>
-      <input type="date" id="GET-endDate" name="GET-endDate" required />
-      <br />
-      <br />
-      {/* Teacher */}
-      <label htmlFor="GET-profesor">Profesor:</label>
-      <select id="GET-profesor" name="GET-profesor">
-        <option value="profesor1">Profesor 1</option>
-        <option value="profesor2">Profesor 2</option>
-        <option value="profesor3">Profesor 3</option>
-      </select>
-      <br />
-      <br />
-      {/* Center */}
-      <label htmlFor="GET-centro">Centro:</label>
-      <select id="GET-centro" name="GET-centro">
-        <option value="centro1">Centro 1</option>
-        <option value="centro2">Centro 2</option>
-        <option value="centro3">Centro 3</option>
-      </select>
-      <br />
-      <br />
-      {/* Duration */}
-      <label htmlFor="GET-duracion">Duración de la clase (minutos):</label>
-      <br />
-      <input
-        type="range"
-        id="GET-duracion"
-        name="GET-duracion"
-        min="30"
-        max="120"
-        step="5"
-        onInput={(e) => (e.target.nextElementSibling.value = e.target.value)}
-      />
-      <output>75</output> min
-      <br />
-      <br />
-      {/* Type */}
-      <label htmlFor="GET-tipo">Tipo de Yoga:</label>
-      <select id="GET-tipo" name="GET-tipo">
+      {/* Tipo de Yoga */}
+      <label htmlFor="type">Tipo de Yoga:</label>
+      <select {...register("type")}>
         <option value="hatha">Hatha</option>
         <option value="vinyasa">Vinyasa</option>
         <option value="dharma">Dharma</option>
         <option value="sivananda">Sivananda</option>
       </select>
       <br />
-      <br />
-      {/* Modality */}
+      {/* Modalidad */}
       <label>Modalidad:</label>
       <br />
-      <input type="radio" id="GET-online" name="modalidad" value="online" />
-      <label htmlFor="GET-online">Online</label>
+      <label>
+        <input type="radio" value="online" {...register("modality")} /> Online
+      </label>
       <br />
-      <input
-        type="radio"
-        id="GET-presencial"
-        name="modalidad"
-        value="presencial"
-      />
-      <label htmlFor="GET-presencial">Presencial</label>
+      <label>
+        <input type="radio" value="presencial" {...register("modality")} />{" "}
+        Presencial
+      </label>
       <br />
-      <br />
-      {/* Submit button */}
-      <input type="submit" value="Enviar" />
-      <br />
-      <br />
+      {/* Botón de enviar */}
+      <button type="submit">Buscar</button>
+      <button type="button" onClick={handleReset}>
+        Limpiar Filtros
+      </button>
     </form>
   );
 };

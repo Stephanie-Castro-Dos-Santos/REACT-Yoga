@@ -8,3 +8,5 @@ export { AuthContext } from "./auth/AuthContext";
 export { AuthProvider } from "./auth/AuthProvider";
 export { CalendarContext } from "./calendar/CalendarContext";
 export { CalendarProvider } from "./calendar/CalendarProvider";
+export { FilterContext } from "./filter/FilterContext";
+export { FilterProvider } from "./filter/FilterProvider";

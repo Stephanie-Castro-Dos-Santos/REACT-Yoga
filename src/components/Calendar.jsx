@@ -1,73 +1,50 @@
-import React, { useContext, useEffect, useState } from "react";
+// Calendar.js
+import React, { useContext, useMemo, useEffect } from "react";
 import { Calendar as BigCalendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
-import { Dialog } from "./Dialog";
-import { useCalendar } from "../hooks/useCalendar";
-import axios from "axios";
-import { CalendarContext, FilterContext } from "../contexts/index";
+import { DialogResume } from "./DialogResume";
+import { DialogOperation } from "./DialogOperation";
+import { useCalendar, useFilter } from "../hooks/index";
+import { CalendarContext, DialogContext } from "../contexts/index";
 
 const localizer = dayjsLocalizer(dayjs);
 
 const Calendar = () => {
+  const { events, calendarId, loadData, setCalendarId, setEvents } =
+    useContext(CalendarContext);
+  const { isOpen, dialogType, dialogData, closeDialog } =
+    useContext(DialogContext);
   const { handleSelectSlot, handleSelectEvent } = useCalendar();
 
-  // Calendar Context
-  const { calendarId, setCalendarId, setEvents, events } =
-    useContext(CalendarContext);
-
-  // Filter Context
-  const { filters } = useContext(FilterContext); // Recupera los filtros del contexto
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    const fetchCalendar = async () => {
-      try {
-        setLoading(true); // Indica que la carga ha comenzado
+    loadData(); // Cargar eventos
+  }, [loadData]); // Añade dependencias si es necesario
 
-        // Envía los filtros como parámetros query
-        const response = await axios.get("http://localhost:3000/api/events", {
-          params: filters, // Los filtros vienen del contexto
-          withCredentials: true,
-        });
+  const filteredEvents = useFilter(events);
 
-        const { calendar, events } = response.data;
-        const calendarId = calendar._id;
-        const eventsCalendar = events.map((event) => ({
-          id: event._id,
-          title: event.title,
-          start: new Date(event.startDate),
-          end: new Date(event.endDate),
-          allDay: event.isAllDay || false,
-        }));
-
-        setCalendarId(calendarId);
-        setEvents(eventsCalendar);
-        setLoading(false); // Indica que la carga ha terminado
-      } catch (error) {
-        console.error("Error al cargar eventos:", error);
-        setLoading(false); // Asegúrate de que la carga se detenga también en caso de error
-      }
-    };
-
-    fetchCalendar();
-  }, [filters]); // Solo depende de los filtros
-
-  // if (loading) {
-  //   return <div>Loading...</div>; // Muestra un mensaje de carga mientras los datos se están recuperando
-  // }
+  const calendarProps = useMemo(
+    () => ({
+      id: calendarId,
+      localizer,
+      events: filteredEvents,
+      selectable: true,
+      onSelectSlot: handleSelectSlot,
+      onSelectEvent: handleSelectEvent,
+    }),
+    [calendarId, filteredEvents, handleSelectSlot, handleSelectEvent]
+  );
 
   return (
     <div style={{ height: "95vh", width: "70vw" }}>
-      <Dialog />
-      <BigCalendar
-        id={calendarId}
-        localizer={localizer}
-        events={events}
-        selectable
-        onSelectSlot={handleSelectSlot}
-        onSelectEvent={handleSelectEvent}
-      />
+      <BigCalendar {...calendarProps} />
+      {isOpen && dialogType === "resume" && (
+        <DialogResume onClose={closeDialog} data={dialogData} />
+      )}
+
+      {isOpen && dialogType === "operation" && (
+        <DialogOperation onClose={closeDialog} data={dialogData} />
+      )}
     </div>
   );
 };

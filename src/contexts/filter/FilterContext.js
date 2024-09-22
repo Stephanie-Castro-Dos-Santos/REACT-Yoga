@@ -5,11 +5,13 @@ export const FilterContext = createContext({
   title: "",
   startDate: "",
   endDate: "",
+  startTime: "",
+  endTime: "",
   teacher: "",
   center: "",
   duration: "",
-  type: "",
-  modality: "",
+  typeYoga: "",
+  mode: "",
   setFilters: () => {}, // Función que se definirá en el FilterProvider
   resetFilters: () => {}, // Función que se definirá en el FilterProvider
 });

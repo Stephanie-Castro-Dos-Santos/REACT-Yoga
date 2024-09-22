@@ -4,20 +4,16 @@ export const DialogReducer = (state, action) => {
     case "OPEN_DIALOG":
       return {
         ...state,
-        isDialogOpen: true,
-        selectedStartDate: action.payload.startDate,
-        selectedEndDate: action.payload.endDate || null,
-        selectedStartTime: action.payload.startTime,
-        selectedEndTime: action.payload.endTime || null,
+        isOpen: true,
+        dialogType: action.payload.dialogType,
+        dialogData: action.payload.data,
       };
     case "CLOSE_DIALOG":
       return {
         ...state,
-        isDialogOpen: false,
-        selectedStartDate: null,
-        selectedEndDate: null,
-        selectedStartTime: null,
-        selectedEndTime: null,
+        isOpen: false,
+        dialogType: null,
+        dialogData: null,
       };
     default:
       return state;

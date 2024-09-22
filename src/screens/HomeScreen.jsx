@@ -21,10 +21,8 @@ export const HomeScreen = () => {
         <p>No estás autenticado.</p>
       )}
       <div id="calendar" className="parent">
-        <DialogProvider>
-          <Filters className="filters-container" />
-          <Calendar className="calendar-container" />
-        </DialogProvider>
+        <Filters className="filters-container" />
+        <Calendar className="calendar-container" />
       </div>
     </div>
   );

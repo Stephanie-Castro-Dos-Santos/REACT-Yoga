@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
 export const DialogContext = createContext({
-  isDialogOpen: false,
-  selectedDate: null,
-  selectedTime: null,
+  isOpen: false,
+  dialogType: null,
+  dialogData: null,
   openDialog: () => {},
   closeDialog: () => {},
 });

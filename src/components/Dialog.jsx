@@ -316,7 +316,7 @@ export const Dialog = () => {
             onChange={(e) =>
               dispatch({
                 type: "SET_FIELD",
-                field: "modalidad",
+                field: "mode",
                 value: e.target.value,
               })
             }

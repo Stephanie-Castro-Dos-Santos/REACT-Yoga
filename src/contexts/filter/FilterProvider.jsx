@@ -6,11 +6,13 @@ const initialState = {
   title: "",
   startDate: "",
   endDate: "",
+  startTime: "",
+  endTime: "",
   teacher: "",
   center: "",
   duration: "",
-  type: "",
-  modality: "",
+  typeYoga: "",
+  mode: "",
 };
 
 export const FilterProvider = ({ children }) => {

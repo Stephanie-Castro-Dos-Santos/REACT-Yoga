@@ -1,32 +1,116 @@
-// CalendarProvider.jsx
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 import { CalendarContext } from "./CalendarContext";
 import { CalendarReducer } from "./CalendarReducer";
+import {
+  fetchEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from "../../services/eventApi";
 
 const initialState = {
   calendarId: null,
   events: [],
+  selectedEvent: null,
 };
 
 export const CalendarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CalendarReducer, initialState);
 
-  const setCalendarId = (calendarId) => {
+  const setCalendarId = useCallback((calendarId) => {
     dispatch({ type: "SET_CALENDAR_ID", payload: calendarId });
-  };
+  }, []);
 
-  const setEvents = (events) => {
+  const setEvents = useCallback((events) => {
     dispatch({ type: "SET_EVENTS", payload: events });
-  };
+  }, []);
+
+  const loadData = useCallback(async () => {
+    try {
+      const data = await fetchEvents();
+
+      if (data && data.calendar) {
+        setCalendarId(data.calendar._id);
+
+        const events = data.calendar.events.map((event) => ({
+          id: event._id,
+          calendarId: event.calendarId,
+          teacherId: event.teacherId,
+          centerId: event.centerId,
+          title: event.title,
+          start: new Date(event.startDate),
+          end: new Date(event.endDate),
+          mode: event.mode,
+          typeYoga: event.typeYoga,
+          description: event.description,
+          participants: event.participants,
+          allDay: event.isAllDay || false,
+          _id: event._id, // Keep the _id for consistency
+        }));
+
+        setEvents(events);
+      } else {
+        console.error("Formato de datos incorrecto:", data);
+      }
+    } catch (error) {
+      console.error("Error al cargar los eventos:", error);
+    }
+  }, [setCalendarId, setEvents]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const addEvent = useCallback(async (event) => {
+    try {
+      const newEvent = await createEvent(event);
+      dispatch({ type: "ADD_EVENT", payload: newEvent });
+    } catch (error) {
+      console.error("Error creando evento:", error);
+    }
+  }, []);
+
+  const editEvent = useCallback(async (event) => {
+    try {
+      const updatedEvent = await updateEvent(event);
+      dispatch({ type: "UPDATE_EVENT", payload: updatedEvent });
+    } catch (error) {
+      console.error("Error actualizando evento:", error);
+    }
+  }, []);
+
+  const removeEvent = useCallback(async (eventId) => {
+    try {
+      await deleteEvent(eventId);
+      dispatch({ type: "DELETE_EVENT", payload: eventId });
+    } catch (error) {
+      console.error(
+        "Error eliminando evento:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  }, []);
+
+  const selectEvent = useCallback((event) => {
+    dispatch({ type: "SELECT_EVENT", payload: event });
+  }, []);
+
+  const clearSelectedEvent = useCallback(() => {
+    dispatch({ type: "CLEAR_SELECTED_EVENT" });
+  }, []);
 
   return (
     <CalendarContext.Provider
       value={{
-        calendarId: state.calendarId,
-        eventsId: state.eventsId,
-        events: state.events,
+        ...state,
+        loadData,
         setCalendarId,
         setEvents,
+        addEvent,
+        editEvent,
+        removeEvent,
+        selectEvent,
+        clearSelectedEvent,
       }}
     >
       {children}

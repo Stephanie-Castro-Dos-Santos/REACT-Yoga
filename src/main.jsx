@@ -7,6 +7,7 @@ import {
   AuthProvider,
   CalendarProvider,
   FilterProvider,
+  DialogProvider,
 } from "./contexts/index.js";
 //import './index.css'
 
@@ -21,11 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <FilterProvider>
         <CalendarProvider>
-          <PlacesProvider>
-            <MapProvider>
-              <App />
-            </MapProvider>
-          </PlacesProvider>
+          <DialogProvider>
+            <PlacesProvider>
+              <MapProvider>
+                <App />
+              </MapProvider>
+            </PlacesProvider>
+          </DialogProvider>
         </CalendarProvider>
       </FilterProvider>
     </AuthProvider>

@@ -4,3 +4,5 @@ export { default as Navigation } from "./Navigation";
 export { BtnLocation } from "./BtnLocation";
 export { Dialog } from "./Dialog";
 export { Filters } from "./Filters";
+export { DialogResume } from "./DialogResume";
+export { DialogOperation } from "./DialogOperation";

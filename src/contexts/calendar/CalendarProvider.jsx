@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   calendarId: null,
+  roleType: "public",
   events: [],
   selectedEvent: null,
 };
@@ -21,13 +22,23 @@ export const CalendarProvider = ({ children }) => {
     dispatch({ type: "SET_CALENDAR_ID", payload: calendarId });
   }, []);
 
+  const setRoleType = useCallback((roleType) => {
+    dispatch({ type: "SET_ROLE_TYPE", payload: roleType });
+  }, []);
+
   const setEvents = useCallback((events) => {
     dispatch({ type: "SET_EVENTS", payload: events });
   }, []);
 
   const loadData = useCallback(async () => {
     try {
-      const data = await fetchEvents();
+      // Asegúrate de que roleType no sea null
+      if (!state.roleType) {
+        console.error("roleType no está definido");
+        return;
+      }
+
+      const data = await fetchEvents(state.roleType);
 
       if (data && data.calendar) {
         setCalendarId(data.calendar._id);
@@ -42,10 +53,15 @@ export const CalendarProvider = ({ children }) => {
           end: new Date(event.endDate),
           mode: event.mode,
           typeYoga: event.typeYoga,
+          address: {
+            location: event.addressId?.location,
+            coordinates: event.addressId?.coordinates,
+          },
+          link: event.link,
           description: event.description,
           participants: event.participants,
           allDay: event.isAllDay || false,
-          _id: event._id, // Keep the _id for consistency
+          _id: event._id,
         }));
 
         setEvents(events);
@@ -55,7 +71,7 @@ export const CalendarProvider = ({ children }) => {
     } catch (error) {
       console.error("Error al cargar los eventos:", error);
     }
-  }, [setCalendarId, setEvents]);
+  }, [setCalendarId, setEvents, state.roleType]);
 
   useEffect(() => {
     loadData();
@@ -105,6 +121,7 @@ export const CalendarProvider = ({ children }) => {
         ...state,
         loadData,
         setCalendarId,
+        setRoleType,
         setEvents,
         addEvent,
         editEvent,

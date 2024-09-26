@@ -6,10 +6,23 @@ export const authReducer = (state, action) => {
         ...state,
         userId: action.payload.userId,
         role: action.payload.role,
+        initialRole: action.payload.initialRole,
         isAuthenticated: true,
       };
     case "LOGOUT":
-      return { ...state, userId: null, role: null, isAuthenticated: false };
+      return {
+        userId: null,
+        role: null,
+        initialRole: null,
+        isAuthenticated: false,
+      };
+
+    case "SET_ROLE":
+      return {
+        ...state,
+        role: action.payload.role,
+      };
+
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import {
   FilterProvider,
   DialogProvider,
 } from "./contexts/index.js";
+import { ChakraProvider } from "@chakra-ui/react";
 //import './index.css'
 
 if (!navigator.geolocation) {
@@ -19,6 +20,7 @@ if (!navigator.geolocation) {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    {/* <ChakraProvider resetCSS={false}> */}
     <AuthProvider>
       <FilterProvider>
         <CalendarProvider>
@@ -32,5 +34,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </CalendarProvider>
       </FilterProvider>
     </AuthProvider>
+    {/* </ChakraProvider> */}
   </React.StrictMode>
 );

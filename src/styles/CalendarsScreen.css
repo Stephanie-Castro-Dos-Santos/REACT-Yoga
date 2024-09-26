@@ -1,0 +1,7 @@
+.control-container {
+  display: flex;
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  align-items: center; /* Centra verticalmente */
+  gap: 10px; /* Espacio entre el Switch y el Select */
+  margin: 20px; /* Margen inferior para separar del resto del contenido */
+}

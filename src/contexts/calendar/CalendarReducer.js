@@ -1,8 +1,14 @@
+import dayjs from "dayjs";
+
 export const CalendarReducer = (state, action) => {
   switch (action.type) {
     case "SET_CALENDAR_ID":
       return { ...state, calendarId: action.payload };
+    case "SET_ROLE_TYPE": // Nuevo caso
+      return { ...state, roleType: action.payload };
     case "SET_EVENTS":
+      console.log("SET EVENTS: ");
+      console.log(action.payload);
       return { ...state, events: action.payload };
     case "ADD_EVENT":
       console.log("Adding event:", action.payload);
@@ -34,19 +40,31 @@ export const CalendarReducer = (state, action) => {
   }
 };
 
-// Helper function to normalize event object
-const normalizeEvent = (event) => ({
-  id: event._id,
-  calendarId: event.calendarId,
-  teacherId: event.teacherId,
-  centerId: event.centerId,
-  title: event.title,
-  start: new Date(event.startDate),
-  end: new Date(event.endDate),
-  mode: event.mode,
-  typeYoga: event.typeYoga,
-  description: event.description,
-  participants: event.participants,
-  allDay: event.isAllDay || false,
-  _id: event._id,
-});
+const normalizeEvent = (event) => {
+  console.log("Normalizing event:", event); // Add this line for debugging
+  return {
+    id: event._id,
+    calendarId: event.calendarId,
+    teacherId: event.teacherId,
+    centerId: event.centerId,
+    title: event.title,
+    start: new Date(event.startDate),
+    end: new Date(event.endDate),
+    mode: event.mode,
+    typeYoga: event.typeYoga,
+    description: event.description,
+    participants: event.participants,
+    link: event.link,
+    address: event.addressId
+      ? {
+          location: event.addressId?.location,
+          coordinates: event.addressId?.coordinates,
+        }
+      : null,
+    allDay: event.isAllDay || false,
+    _id: event._id,
+  };
+};
+
+// start: dayjs(event.startDate).format("YYYY-MM-DDTHH:mm"),
+// end: dayjs(event.endDate).format("YYYY-MM-DDTHH:mm"),

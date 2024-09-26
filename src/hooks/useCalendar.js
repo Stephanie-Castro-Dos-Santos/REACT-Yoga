@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 export const useCalendar = () => {
   const { selectEvent, calendarId } = useContext(CalendarContext);
   const { openDialog } = useContext(DialogContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, role } = useContext(AuthContext);
   const navigate = useNavigate();
   const clickRef = useRef(null);
 
@@ -17,6 +17,11 @@ export const useCalendar = () => {
         navigate("/auth");
         return;
       }
+
+      if (role == "student") {
+        return;
+      }
+
       window.clearTimeout(clickRef.current);
       clickRef.current = window.setTimeout(() => {
         const startDate = slotInfo.start;

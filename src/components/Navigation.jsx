@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { demo_logo, user_dumy } from "../assets";
+import { AvatarDropdown } from "./index";
 import "../styles";
 
 const Navigation = () => {
@@ -34,13 +35,14 @@ const Navigation = () => {
                 <Link to="/contact">Contacto</Link>
               </li>
               <li className="profile-container">
-                <Link to="/auth">
+                {/* <Link to="/auth">
                   <img
                     src={user_dumy}
                     alt="profilePicture"
                     className="user-picture"
                   />
-                </Link>
+                </Link> */}
+                <AvatarDropdown />
               </li>
               <li className="logout-container">
                 <Link to="/auth">

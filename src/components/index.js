@@ -6,3 +6,5 @@ export { Dialog } from "./Dialog";
 export { Filters } from "./Filters";
 export { DialogResume } from "./DialogResume";
 export { DialogOperation } from "./DialogOperation";
+export { AddressSearch } from "./AddressSearch";
+export { AvatarDropdown } from "./AvatarDropdown";

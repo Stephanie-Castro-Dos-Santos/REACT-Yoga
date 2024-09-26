@@ -13,11 +13,12 @@ export const useSession = () => {
     if (sessionData) {
       try {
         // Decodificar el JSON de la cookie
-        const { userId, role } = JSON.parse(sessionData);
+        const { userId, role, initialRole } = JSON.parse(sessionData);
+        console.log(sessionData);
 
         // Actualizar el contexto de autenticación
-        if (userId && role) {
-          login(userId, role);
+        if (userId && role && initialRole) {
+          login(userId, role, initialRole);
         }
       } catch (e) {
         console.error("Error al decodificar la cookie: ", e);
@@ -34,10 +35,10 @@ export const useSession = () => {
         withCredentials: true, // Necesario para enviar cookies
       });
 
-      const { userId, role } = response.data;
+      const { userId, role, initialRole } = response.data;
 
       if (userId && role) {
-        login(userId, role); // Actualiza el contexto con la información de sesión
+        login(userId, role, initialRole); // Actualiza el contexto con la información de sesión
       }
     } catch (err) {
       console.error("No se pudo recuperar la sesión: ", err);

@@ -8,13 +8,14 @@ import {
   Button,
   ChakraProvider,
   Portal,
+  background,
 } from "@chakra-ui/react";
 import { user_dumy } from "../assets";
 import { AuthContext } from "../contexts";
 import { useNavigate } from "react-router-dom"; // Si usas react-router-dom
 
 export const AvatarDropdown = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate(); // Usamos navigate para la redirección
 
   const handleMenuClick = () => {
@@ -22,6 +23,11 @@ export const AvatarDropdown = () => {
       // Redirige a /auth si no está autenticado
       navigate("/auth");
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
   };
 
   return (
@@ -38,7 +44,7 @@ export const AvatarDropdown = () => {
       {isAuthenticated && (
         // Si está autenticado, mostramos el menú desplegable
         <Portal>
-          <MenuList>
+          <MenuList bg="white">
             <MenuItem as="a" href="#">
               Profile
             </MenuItem>
@@ -48,7 +54,7 @@ export const AvatarDropdown = () => {
             <MenuItem as="a" href="#">
               Settings
             </MenuItem>
-            <MenuItem as="a" href="#">
+            <MenuItem as="a" href="#" onClick={handleLogout}>
               Logout
             </MenuItem>
           </MenuList>

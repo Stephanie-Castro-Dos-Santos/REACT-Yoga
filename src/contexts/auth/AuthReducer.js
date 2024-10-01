@@ -1,4 +1,3 @@
-// AuthReducer.js
 export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
@@ -11,18 +10,17 @@ export const authReducer = (state, action) => {
       };
     case "LOGOUT":
       return {
+        ...state,
         userId: null,
         role: null,
         initialRole: null,
         isAuthenticated: false,
       };
-
     case "SET_ROLE":
       return {
         ...state,
         role: action.payload.role,
       };
-
     default:
       return state;
   }

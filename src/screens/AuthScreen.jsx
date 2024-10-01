@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks";
 import { AuthContext } from "../contexts/index";
-import { AddressSearch } from "../components/index"; // Asegúrate de que la ruta de importación sea correcta
+import { SearchBox } from "../components/index"; // Asegúrate de que la ruta de importación sea correcta
 
 export const AuthScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -67,7 +67,7 @@ export const AuthScreen = () => {
             {role === "center" && (
               <div>
                 <label htmlFor="address">Dirección:</label>
-                <AddressSearch
+                <SearchBox
                   onSelect={handleAddressSelect}
                   defaultAddress={selectedAddress} // Pasa la dirección seleccionada como valor por defecto
                 />

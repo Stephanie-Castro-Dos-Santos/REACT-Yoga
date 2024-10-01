@@ -1,10 +1,9 @@
 export { default as Calendar } from "./Calendar";
-export { default as Map } from "./Map";
+export { Map } from "./Map";
 export { default as Navigation } from "./Navigation";
 export { BtnLocation } from "./BtnLocation";
-export { Dialog } from "./Dialog";
 export { Filters } from "./Filters";
 export { DialogResume } from "./DialogResume";
 export { DialogOperation } from "./DialogOperation";
-export { AddressSearch } from "./AddressSearch";
+export { SearchBox } from "./SearchBox";
 export { AvatarDropdown } from "./AvatarDropdown";

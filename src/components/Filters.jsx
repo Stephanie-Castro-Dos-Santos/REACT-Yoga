@@ -5,18 +5,8 @@ import { BtnLocation, Map } from "../components";
 import { debounce } from "lodash";
 
 export const Filters = () => {
-  const { setFilters, resetFilters } = useContext(FilterContext);
-  const { register, watch, reset } = useForm({
-    defaultValues: {
-      title: "",
-      startDate: "",
-      endDate: "",
-      teacher: "",
-      center: "",
-      typeYoga: "",
-      mode: "",
-    },
-  });
+  const { setFilters, resetFilters, filters } = useContext(FilterContext);
+  const { register, watch, reset } = useForm(filters);
 
   const debouncedSetFilters = useCallback(
     debounce((data) => {

@@ -12,6 +12,8 @@ export const FilterContext = createContext({
   duration: "",
   typeYoga: "",
   mode: "",
+  location: "",
+  coordinates: null,
   setFilters: () => {}, // Función que se definirá en el FilterProvider
   resetFilters: () => {}, // Función que se definirá en el FilterProvider
 });

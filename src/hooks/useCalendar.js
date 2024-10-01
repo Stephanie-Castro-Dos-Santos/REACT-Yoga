@@ -2,12 +2,11 @@
 import { useCallback, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { CalendarContext, DialogContext, AuthContext } from "../contexts/index";
-import dayjs from "dayjs";
 
 export const useCalendar = () => {
-  const { selectEvent, calendarId } = useContext(CalendarContext);
+  const { selectEvent, calendarId, roleType } = useContext(CalendarContext);
   const { openDialog } = useContext(DialogContext);
-  const { isAuthenticated, role } = useContext(AuthContext);
+  const { isAuthenticated, role, initialRole } = useContext(AuthContext);
   const navigate = useNavigate();
   const clickRef = useRef(null);
 
@@ -18,7 +17,9 @@ export const useCalendar = () => {
         return;
       }
 
-      if (role == "student") {
+      console.log("ROLE USECALENDAR:" + role);
+
+      if (role == "student" || roleType == "public") {
         return;
       }
 
@@ -35,7 +36,7 @@ export const useCalendar = () => {
         });
       }, 200);
     },
-    [openDialog, isAuthenticated, navigate]
+    [openDialog, calendarId, isAuthenticated, role, roleType, navigate]
   );
 
   const handleSelectEvent = useCallback(

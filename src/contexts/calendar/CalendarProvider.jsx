@@ -6,6 +6,7 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
+  bookingEvent,
 } from "../../services/eventApi";
 
 const initialState = {
@@ -54,8 +55,8 @@ export const CalendarProvider = ({ children }) => {
           mode: event.mode,
           typeYoga: event.typeYoga,
           address: {
-            location: event.addressId?.location,
-            coordinates: event.addressId?.coordinates,
+            location: event.address?.location,
+            coordinates: event.address?.coordinates,
           },
           link: event.link,
           description: event.description,
@@ -97,11 +98,24 @@ export const CalendarProvider = ({ children }) => {
 
   const removeEvent = useCallback(async (eventId) => {
     try {
+      console.log(eventId);
       await deleteEvent(eventId);
       dispatch({ type: "DELETE_EVENT", payload: eventId });
     } catch (error) {
       console.error(
         "Error eliminando evento:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  }, []);
+
+  const bookEvent = useCallback(async (eventId) => {
+    try {
+      // Llama a la función de eventApi para realizar la reserva
+      await bookingEvent(eventId);
+    } catch (error) {
+      console.error(
+        "Error reservando evento:",
         error.response ? error.response.data : error.message
       );
     }
@@ -126,6 +140,7 @@ export const CalendarProvider = ({ children }) => {
         addEvent,
         editEvent,
         removeEvent,
+        bookEvent,
         selectEvent,
         clearSelectedEvent,
       }}

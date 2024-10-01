@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { CalendarContext, DialogContext, AuthContext } from "../contexts/index";
 
 export const DialogResume = ({ onClose, data }) => {
-  const { removeEvent, roleType } = useContext(CalendarContext);
+  const { removeEvent, bookEvent, selectedEvent, roleType } =
+    useContext(CalendarContext);
   const { openDialog } = useContext(DialogContext);
   const { role } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ export const DialogResume = ({ onClose, data }) => {
       // Redirigir al login
       navigate("/auth");
     } else {
-      // Lógica para reservar la clase
-      // Por ejemplo: reservarClase(data.id);
+      console.log(selectedEvent);
+      bookEvent(selectedEvent._id);
     }
   };
 
@@ -28,6 +29,8 @@ export const DialogResume = ({ onClose, data }) => {
   };
 
   const handleDelete = async () => {
+    console.log(data.id);
+    console.log(data._id);
     await removeEvent(data.id);
     onClose();
   };
@@ -59,7 +62,7 @@ export const DialogResume = ({ onClose, data }) => {
       );
     } else if (roleType === "student" && role === "student") {
       buttons.push(
-        <button key="unsubscribe" onClick={handleUnsubscribe}>
+        <button key="unsubscribe" onClick={handleDelete}>
           Desapuntarte
         </button>
       );

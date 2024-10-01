@@ -1,14 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { DialogProvider, AuthContext } from "../contexts/index";
 import { BtnLocation, Calendar, Map, Filters } from "../components";
-import { useSession } from "../hooks/index";
 import "../styles";
 
 export const HomeScreen = () => {
-  //Recargar el CONTEXT
-  useSession();
-
-  const { userId, role, isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, userId, role, checkSession } =
+    useContext(AuthContext);
 
   return (
     <div>

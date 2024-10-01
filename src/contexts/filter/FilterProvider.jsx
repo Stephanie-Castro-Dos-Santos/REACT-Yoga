@@ -13,6 +13,8 @@ const initialState = {
   duration: "",
   typeYoga: "",
   mode: "",
+  location: "",
+  coordinates: null,
 };
 
 export const FilterProvider = ({ children }) => {

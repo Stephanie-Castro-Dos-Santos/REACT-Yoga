@@ -4,16 +4,18 @@ import { DialogBase } from "./DialogBase";
 import { CalendarContext } from "../contexts/index";
 import dayjs from "dayjs";
 import axios from "axios";
-import { AddressSearch } from "./index";
+import { SearchBox } from "./index";
 
 export const DialogOperation = ({ onClose, data }) => {
   const { addEvent, editEvent } = useContext(CalendarContext);
   const [teachers, setTeachers] = useState([]);
   const [centers, setCenters] = useState([]);
-  const [isCustomLocation, setIsCustomLocation] = useState(!!data.address); // Inicializa con true si hay dirección
+  const [isCustomLocation, setIsCustomLocation] = useState(!data.centerId); // Inicializa con true si hay dirección
   const [selectedAddress, setSelectedAddress] = useState(
     data.address ? data.address : null
   ); // Si ya tiene dirección, la preseleccionamos
+
+  // console.log(data);
 
   // Valores predeterminados del formulario
   const defaultFormValues = {
@@ -28,10 +30,10 @@ export const DialogOperation = ({ onClose, data }) => {
     description: data.description || "",
     link: data.link || "",
     address: {
-      location: selectedAddress?.location ? selectedAddress.location : "",
+      location: selectedAddress?.location ? selectedAddress.location : null,
       coordinates: selectedAddress?.coordinates
         ? selectedAddress.coordinates
-        : [],
+        : null,
     },
   };
 
@@ -100,11 +102,11 @@ export const DialogOperation = ({ onClose, data }) => {
     <DialogBase isOpen={true} onClose={onClose}>
       <h2>{data.dialogMode === "CREATE" ? "Crear Evento" : "Editar Evento"}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        {/*<input
           type="hidden"
           {...register("calendarId")}
           value={data.calendarId}
-        />
+        />*/}
         <input
           {...register("title", { required: true })}
           placeholder="Título"
@@ -179,7 +181,7 @@ export const DialogOperation = ({ onClose, data }) => {
             <br />
 
             {isCustomLocation ? (
-              <AddressSearch
+              <SearchBox
                 onSelect={setSelectedAddress}
                 defaultAddress={selectedAddress}
               />

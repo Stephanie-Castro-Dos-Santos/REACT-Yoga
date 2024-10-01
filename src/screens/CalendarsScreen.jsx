@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext, CalendarContext } from "../contexts/index";
 import { Calendar, Filters } from "../components";
-import { useSession, useAuth } from "../hooks/index";
+import { useAuth } from "../hooks/index";
 import "../styles";
 
 export const CalendarsScreen = () => {
@@ -46,7 +46,7 @@ export const CalendarsScreen = () => {
     setRoleType(selectedRole); // Actualizar roleType
   };
 
-  console.log("INITIAL ROLE: " + initialRole);
+  //console.log("INITIAL ROLE: " + initialRole);
 
   return (
     <div>
@@ -66,10 +66,14 @@ export const CalendarsScreen = () => {
             <br />
             <select onChange={handleRoleChange} value={roleType}>
               <option value="">Seleccione un calendario</option>
-              {role === "teacher" ? (
+              {role === "teacher" && (
                 <option value="teacher">Teacher Calendar</option>
-              ) : (
+              )}
+              {role === "student" && (
                 <option value="student">Student Calendar</option>
+              )}
+              {role === "center" && (
+                <option value="center">Center Calendar</option>
               )}
               <option value="public">Public Calendar</option>
             </select>

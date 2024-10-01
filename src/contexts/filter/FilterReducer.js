@@ -15,6 +15,8 @@ export const FilterReducer = (state, action) => {
         duration: "",
         typeYoga: "",
         mode: "",
+        location: "",
+        coordinates: null,
       }; // Reiniciar los valores de los filtros
     default:
       throw new Error(`Unknown action: ${action.type}`);

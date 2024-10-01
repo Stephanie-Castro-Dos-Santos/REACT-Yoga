@@ -1,24 +1,22 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
-import mapboxgl, { Marker } from "mapbox-gl";
+import React, { useEffect, useRef, useContext, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Geocoder } from "@mapbox/search-js-react";
-import { PlacesContext, MapContext } from "../contexts";
+import { PlacesContext, MapContext, FilterContext } from "../contexts";
 
-const Map = () => {
+export const Map = ({}) => {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  //const geocoder = useRef(null);
-  //const [mapLoaded, setMapLoaded] = useState(false);
-  const [inputValue, setInputValue] = useState("");
   const mbToken = import.meta.env.VITE_MAPBOX_TOKEN;
-  const { isLoading, userLocation } = useContext(PlacesContext);
-  const { setMap } = useContext(MapContext);
+  const [value, setValue] = useState("");
+
+  const { userLocation } = useContext(PlacesContext);
+  const { setMap, setAddresses, isMapReady } = useContext(MapContext);
+  const { setFilters } = useContext(FilterContext);
 
   mapboxgl.accessToken = mbToken;
 
   useEffect(() => {
-    //if (!userLocation) return;
-
     if (mapInstanceRef.current) {
       mapInstanceRef.current.remove();
     }
@@ -35,25 +33,35 @@ const Map = () => {
     mapInstanceRef.current.on("load", () => {
       setMap(mapInstanceRef.current);
     });
-
-    // return () => {
-    //   if (mapInstanceRef.current) {
-    //     mapInstanceRef.current.remove();
-    //   }
-    // };
   }, [userLocation, mbToken]);
+
+  // Cuando el mapa esté listo, cargar las direcciones
+  useEffect(() => {
+    if (isMapReady) {
+      setAddresses();
+    }
+  }, [isMapReady]);
+
+  const handleGeocoderChange = (event) => {
+    const { coordinates, full_address } = event.properties;
+    // console.log(coordinates);
+
+    setValue(full_address);
+
+    setFilters({
+      location: full_address,
+      coordinates: [coordinates.longitude, coordinates.latitude],
+    });
+  };
 
   return (
     <div>
-      {/* <h1>{userLocation?.join(",")}</h1> */}
       <Geocoder
         accessToken={mbToken}
         map={mapInstanceRef.current}
         mapboxgl={mapboxgl}
-        value={inputValue}
-        onChange={(d) => {
-          setInputValue(d);
-        }}
+        value={value}
+        onRetrieve={handleGeocoderChange}
         marker
       />
       <div
@@ -68,5 +76,3 @@ const Map = () => {
     </div>
   );
 };
-
-export default Map;

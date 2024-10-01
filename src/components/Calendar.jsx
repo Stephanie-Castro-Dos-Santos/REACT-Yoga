@@ -22,6 +22,8 @@ const Calendar = () => {
   }, [loadData]); // Añade dependencias si es necesario
 
   const filteredEvents = useFilter(events);
+  // console.log(events);
+  //console.log(filteredEvents);
 
   const calendarProps = useMemo(
     () => ({

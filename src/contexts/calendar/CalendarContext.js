@@ -13,6 +13,7 @@ export const CalendarContext = createContext({
   addEvent: () => {}, // Función para añadir un nuevo evento
   updateEvent: () => {}, // Función para actualizar un evento existente
   removeEvent: () => {}, // Función para eliminar un evento
+  bookEvent: () => {},
   selectEvent: () => {}, // Función para seleccionar un evento
   clearSelectedEvent: () => {}, // Función para limpiar el evento seleccionado
 });

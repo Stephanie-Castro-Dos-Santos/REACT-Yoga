@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 export const CalendarReducer = (state, action) => {
   switch (action.type) {
     case "SET_CALENDAR_ID":
@@ -55,10 +53,10 @@ const normalizeEvent = (event) => {
     description: event.description,
     participants: event.participants,
     link: event.link,
-    address: event.addressId
+    address: event.address
       ? {
-          location: event.addressId?.location,
-          coordinates: event.addressId?.coordinates,
+          location: event.address?.location || null,
+          coordinates: event.address?.coordinates || null,
         }
       : null,
     allDay: event.isAllDay || false,

@@ -1,19 +1,17 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/index"; // Asegúrate de que esto apunte a tu contexto de autenticación
-import { useSession } from "./useSession";
 import axios from "axios";
 
 export const useAuth = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
-  const { setRole } = useContext(AuthContext); // Añadir contexto de autenticación
-
-  useSession();
+  const { setRole, login } = useContext(AuthContext); // Añadir contexto de autenticación
 
   const handleAuth = async (isLogin, data) => {
-    const url = `http://localhost:3000/api/${isLogin ? "login" : "register"}`;
+    const url = `${API_URL}/${isLogin ? "login" : "register"}`;
     try {
       const response = await axios.post(url, data, {
         headers: { "Content-Type": "application/json" },
@@ -21,7 +19,9 @@ export const useAuth = () => {
       });
 
       const responseData = response.data;
+
       setSuccess(responseData.message || "Operación exitosa");
+      login();
 
       // Redirigir al inicio después de la autenticación
       navigate("/");
@@ -33,8 +33,8 @@ export const useAuth = () => {
 
   const switchRole = async (userId, newRole) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/switch-role",
+      const response = await axios.patch(
+        `${API_URL}/switch-role`,
         { userId, role: newRole },
         { withCredentials: true }
       );

@@ -21,7 +21,8 @@ export const useAuth = () => {
       const responseData = response.data;
 
       setSuccess(responseData.message || "Operación exitosa");
-      login();
+
+      await login(responseData.user);
 
       // Redirigir al inicio después de la autenticación
       navigate("/");
@@ -39,7 +40,7 @@ export const useAuth = () => {
         { withCredentials: true }
       );
 
-      setRole(response.data.role); // Actualiza el rol y roleType en el contexto
+      await setRole(response.data.role); // Actualiza el rol y roleType en el contexto
       setSuccess("Rol cambiado exitosamente");
     } catch (err) {
       setError(err.response?.data?.message || "Error al cambiar rol");

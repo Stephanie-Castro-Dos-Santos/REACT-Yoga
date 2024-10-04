@@ -13,6 +13,7 @@ const INITIAL_STATE = {
 export const MapProvider = ({ children }) => {
   const [state, dispatch] = useReducer(MapReducer, INITIAL_STATE);
   const markerRef = useRef([]); // Usamos un ref para almacenar los marcadores creados
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Accede a setFilters fuera de handleMarkerClick
   const { setFilters } = useContext(FilterContext);
@@ -32,7 +33,7 @@ export const MapProvider = ({ children }) => {
   // Función para establecer las direcciones desde el backend
   const setAddresses = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/addresses");
+      const response = await axios.get(`${API_URL}/addresses`);
       dispatch({ type: "setAddresses", payload: response.data });
     } catch (error) {
       console.error("Error fetching addresses:", error);

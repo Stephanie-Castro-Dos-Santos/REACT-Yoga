@@ -45,8 +45,8 @@ export const DialogOperation = ({ onClose, data }) => {
     const fetchTeachersAndCenters = async () => {
       try {
         const [teachersResponse, centersResponse] = await Promise.all([
-          axios.get("http://localhost:3000/api/teachers"),
-          axios.get("http://localhost:3000/api/centers"),
+          axios.get(`${API_URL}/teachers`),
+          axios.get(`${API_URL}/centers`),
         ]);
         setTeachers(teachersResponse.data || []);
         setCenters(centersResponse.data || []);

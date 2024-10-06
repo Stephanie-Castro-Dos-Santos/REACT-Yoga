@@ -11,6 +11,10 @@ import {
 } from "./contexts/index.js";
 import { ChakraProvider } from "@chakra-ui/react";
 //import './index.css'
+import axios from "axios";
+
+// Configurar Axios para enviar cookies con cada solicitud
+axios.defaults.withCredentials = true;
 
 if (!navigator.geolocation) {
   const msg = "Tu navegador no tiene opción de Geolocalización";

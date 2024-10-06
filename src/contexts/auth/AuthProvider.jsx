@@ -22,9 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkSession = async () => {
     try {
-      const response = await axios.get(`${API_URL}/session`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${API_URL}/session`);
 
       const { userId, role, initialRole } = response.data;
 
@@ -61,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+      await axios.post(`${API_URL}/logout`, {});
       // Cookies.remove("sessionData");
       dispatch({ type: "LOGOUT" });
     } catch (err) {
@@ -71,13 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   const setRole = async (role) => {
     try {
-      const response = await axios.patch(
-        `${API_URL}/switch-role`,
-        { role },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.patch(`${API_URL}/switch-role`, { role });
       dispatch({ type: "SET_ROLE", payload: { role: response.data.role } });
     } catch (err) {
       console.error("Error cambiando el rol", err);

@@ -15,7 +15,6 @@ export const useAuth = () => {
     try {
       const response = await axios.post(url, data, {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       });
 
       const responseData = response.data;
@@ -34,11 +33,10 @@ export const useAuth = () => {
 
   const switchRole = async (userId, newRole) => {
     try {
-      const response = await axios.patch(
-        `${API_URL}/switch-role`,
-        { userId, role: newRole },
-        { withCredentials: true }
-      );
+      const response = await axios.patch(`${API_URL}/switch-role`, {
+        userId,
+        role: newRole,
+      });
 
       await setRole(response.data.role); // Actualiza el rol y roleType en el contexto
       setSuccess("Rol cambiado exitosamente");

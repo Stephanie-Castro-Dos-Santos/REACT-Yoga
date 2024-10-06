@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import {
   HomeScreen,
@@ -9,11 +9,6 @@ import {
 } from "./screens";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components";
-import { AuthContext } from "./contexts/index";
-import axios from "axios";
-
-// Configurar Axios para enviar cookies con cada solicitud
-axios.defaults.withCredentials = true;
 
 function App() {
   return (

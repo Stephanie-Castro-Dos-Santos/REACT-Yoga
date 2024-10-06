@@ -5,7 +5,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const fetchEvents = async (roleType) => {
   const response = await axios.get(`${API_URL}/events`, {
     params: { roleType }, // Enviamos roleType como query parameter
-    withCredentials: true, // Asegura que las cookies de la sesión se envíen con la solicitud
   });
 
   console.log("FETCH API");

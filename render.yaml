@@ -1,10 +1,13 @@
 services:
   - type: web
-    name: yogin-website
-    env: static
-    staticPublishPath: dist
-    buildCommand: npm run build
+    name: yogin-website # Cambia esto si deseas un nombre diferente para tu servicio
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run dev # Asegúrate de tener un comando para servir tu aplicación construida
+    autoDeploy: true
+    staticPublishPath: dist # Ruta donde se encuentra el build de tu aplicación
     routes:
-      - type: rewrite
-        source: /.*
-        destination: /index.html
+      - src: /.*
+        dest: index.html # Para manejar las rutas de React Router
+      - src: /assets/(.*)
+        dest: /assets/$1 # Para servir activos estáticos

@@ -36,3 +36,9 @@ services:
       - path: /*
         name: Set-Cookie
         value: "SameSite=None; Secure; HttpOnly"
+
+envVars:
+  - key: VITE_MAPBOX_TOKEN
+    value: pk.eyJ1IjoieW9naW4tdnMiLCJhIjoiY2x6OXF1ZTdhMGVjcDJrcGppeng5OXh3MCJ9.vvdb5vFqGXNrT4EnSb64OA
+  - key: VITE_API_URL
+    value: https://yogin-api.onrender.com/api
